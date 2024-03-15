@@ -1,9 +1,9 @@
-import { Repository } from 'typeorm';
+
 import { paslon } from '../entity/paslon';
 import { AppDataSource } from '../data-source';
 
 export default new class PaslonServices {
-    private readonly PaslonRepository : Repository<paslon> = AppDataSource.getRepository(paslon)
+    PaslonRepository  = AppDataSource.getRepository(paslon)
 
     async create (data: any): Promise<object | string> {
         try {

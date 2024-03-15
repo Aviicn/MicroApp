@@ -15,10 +15,11 @@ export default new (class paslonController {
 
             const { error, value } = createPaslonSchema.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
-           
+         
             
             const obj = {
                 ...value
+             
             }
             
             console.log(obj)
@@ -69,6 +70,7 @@ export default new (class paslonController {
     }
 
     async getAll(req: Request, res: Response) {
+        console.log("Get All : ")
         try {
             const response = await paslonService.getAll();
             return res.status(201).json(response);

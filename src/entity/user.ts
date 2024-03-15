@@ -1,10 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne} from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from "typeorm"
 import { vote } from "./vote"
+import { article } from "./article"
 
 export type UserRoleType = "admin" | "editor" | "ghost"
 @Entity({ name: "user" })
-
-@Entity()
 export class user {
   @PrimaryGeneratedColumn()
   id: number;
@@ -37,4 +36,9 @@ role: UserRoleType
   })
   vote: vote
 
+  @OneToMany(() => article, (article) => article.user, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE"
+  })
+  article: article[]
 }

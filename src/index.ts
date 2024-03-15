@@ -23,5 +23,5 @@ AppDataSource.initialize()
     app.listen(port, () => console.log(`Server succes on PORT ${port}`))
     })
 
-
+// harus pake querybuilder
     

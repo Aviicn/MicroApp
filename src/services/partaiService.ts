@@ -1,11 +1,11 @@
-import { Repository } from 'typeorm';
+
 import { partai } from '../entity/partai';
 import { AppDataSource } from '../data-source';
 import { paslon } from '../entity/paslon';
 
 export default new class PartaiServices {
-    private readonly PartaiRepository: Repository<partai> = AppDataSource.getRepository(partai)
-    private readonly PaslonRepository: Repository<paslon> = AppDataSource.getRepository(paslon)
+  PartaiRepository = AppDataSource.getRepository(partai)
+  PaslonRepository= AppDataSource.getRepository(paslon)
 
     async create(data: partai): Promise<object | string> {
         try {

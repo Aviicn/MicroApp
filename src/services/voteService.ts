@@ -1,12 +1,14 @@
 import { vote } from '../entity/vote';
-import { Repository } from 'typeorm';
 import { AppDataSource } from '../data-source';
 
 export default new class VoteService {
-    private readonly VoteRepository: Repository<vote> = AppDataSource.getRepository(vote)
+  VoteRepository = AppDataSource.getRepository(vote)
 
     async create(data: any): Promise<object | string> {
         try {
+    //         const response = await AppDataSource
+    //   .getRepository(vote)
+    //   .createQueryBuilder("vote")
             const checkVoter = await this.VoteRepository.findOne({
                 where: {
                     user: {
