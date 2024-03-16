@@ -1,6 +1,7 @@
 import * as Joi from "joi"
 
 export const createPartaiSchema = Joi.object({
+    nomor_urut : Joi.number().positive().min(1).required(),
     name: Joi.string().required(),
     chairman: Joi.string().max(250).required(),
     visionAndMission: Joi.string().max(250).required(),

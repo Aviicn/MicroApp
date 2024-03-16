@@ -7,6 +7,11 @@ export class partai {
     @PrimaryGeneratedColumn()
     id: number
 
+
+    @Column()
+    nomor_urut: number
+
+
     @Column()
     name: string
 
@@ -16,6 +21,7 @@ export class partai {
     @Column()
     visionAndMission: string
 
+   
     @Column()
     address: string
 

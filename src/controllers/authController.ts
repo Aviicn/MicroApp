@@ -1,7 +1,7 @@
 import { Request, Response} from "express";
 
 import { registerSchema, loginSchema, getOneUserValidation } from "../utils/validator/authValidator";
-import userService from "../services/authService";
+import user from "../services/authService";
 
 export default new class userController {
     async register(req: Request, res: Response) {
@@ -10,7 +10,7 @@ export default new class userController {
             const {error} = registerSchema.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
                 
-            const response = await userService.register(data);
+            const response = await user.register(data);
             return res.status(201).json(response);
         } catch (error) {
             return res.status(500).json(error);
@@ -24,7 +24,7 @@ export default new class userController {
             const {error} = loginSchema.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
 
-            const response = await userService.login(data);
+            const response = await user.login(data);
             return res.status(201).json(response);
         } catch (error) {
             return res.status(500).json(error);
@@ -33,7 +33,7 @@ export default new class userController {
     
     async getAll(req: Request, res: Response) {
         try {
-            const response = await userService.getAll();
+            const response = await user.getAll();
             return res.status(201).json(response);
         } catch (error) {
             return res.status(500).json(error);
@@ -53,7 +53,7 @@ export default new class userController {
                 })
             }
             
-            const response = await userService.getOne(value.id);
+            const response = await user.getOne(value.id);
             return res.status(201).json(response);
         } catch (error) {
             return res.status(500).json(error);

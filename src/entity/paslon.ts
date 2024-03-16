@@ -18,6 +18,9 @@ export class paslon {
     @Column()
     visionAndMission: string
 
+    @Column()
+    coalition: string
+
     @Column({ nullable: true })
     picture: string
 

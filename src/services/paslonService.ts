@@ -7,12 +7,14 @@ export default new class PaslonServices {
 
     async create (data: any): Promise<object | string> {
         try {
+
             const noPaslon = await this.PaslonRepository.count();
             if(
-                data.noPaslon < noPaslon + 1 ||
-                data.noPaslon > noPaslon + 1
+                data.no < noPaslon + 1 ||
+                data.no > noPaslon + 1
             )
             return `message: noPaslon already exist, please input noPaslon ${noPaslon + 1} or more`
+           
             
             const response = await this.PaslonRepository.save(data)
             console.log(response)

@@ -6,6 +6,7 @@ export default new class PartaiController {
     async create(req: Request, res : Response) {
         try {
             const data = {
+                nomor_urut : req.body.nomor_urut,
                 name : req.body.name,
                 chairman : req.body.chairman,
                 visionAndMission: req.body.visionAndMission,
@@ -13,7 +14,7 @@ export default new class PartaiController {
                 paslon: req.body.paslon,
                 picture: res.locals.filename
             }
-            
+
             const { error, value } = createPartaiSchema.validate(data);
             if(error) return res.status(400).json(error.details[0].message)
 
@@ -96,6 +97,8 @@ export default new class PartaiController {
 
     async getAll(req: Request, res: Response) {
         try {
+            console.log("response")
+
             const response = await partaiService.getAll();
             return res.status(200).json(response);
         } catch (error) {
