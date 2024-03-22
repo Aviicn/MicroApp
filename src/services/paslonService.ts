@@ -3,21 +3,32 @@ import { paslon } from '../entity/paslon';
 import { AppDataSource } from '../data-source';
 
 export default new class PaslonServices {
-    PaslonRepository  = AppDataSource.getRepository(paslon)
+    findById(paslon: any) {
+      throw new Error("Method not implemented.");
+    }
 
-    async create (data: any): Promise<object | string> {
+    async create (data: paslon): Promise<object | string> {
         try {
 
-            const noPaslon = await this.PaslonRepository.count();
+            const noPaslon = await AppDataSource
+            .getRepository(paslon)
+            .count();
             if(
                 data.no < noPaslon + 1 ||
                 data.no > noPaslon + 1
             )
-            return `message: noPaslon already exist, please input noPaslon ${noPaslon + 1} or more`
-           
             
-            const response = await this.PaslonRepository.save(data)
-            console.log(response)
+            {
+                return `message: noPaslon already exist, please input noPaslon ${noPaslon + 1} or more`
+            }
+            const response = await AppDataSource
+            .getRepository(paslon)
+            .createQueryBuilder("paslon")
+            .insert()
+            .into(paslon)
+            .values(data)
+            .execute();
+    
             return {
                 message: "success create paslon",
                 data: response
@@ -28,12 +39,18 @@ export default new class PaslonServices {
         }
     }
 
-    async update (id: number, data: any): Promise<object | string> {
+    async update (id: number, data: paslon): Promise<object | string> {
         try {
-            const response = await this.PaslonRepository.update(id, data)
+            const response = await AppDataSource
+        .getRepository(paslon)
+        .createQueryBuilder("paslon")
+        .update(paslon)
+        .set(data)
+        .where("id = :id", { id })
+        .execute();
             return {
                 message: "success update paslon",
-                data: response
+                data: paslon
             }
         } catch (error) {
             return "message: something error while update paslon"
@@ -42,7 +59,13 @@ export default new class PaslonServices {
 
     async delete (id: number): Promise<object | string> {
         try {
-            const response = await this.PaslonRepository.delete(id)
+            
+      const response = await AppDataSource.getRepository(paslon)
+      .createQueryBuilder("paslon")
+      .delete()
+      .from(paslon)
+      .where("id = :id", { id })
+      .execute();
             return {
                 message: "success delete paslon",
                 data: response
@@ -54,14 +77,13 @@ export default new class PaslonServices {
 
     async getAll(): Promise<object | string> {
         try {
-            const response = await this.PaslonRepository.find({
-                relations: ["partai"],
-                select: {
-                    partai: {
-                        name: true
-                    }
-                }
-            });
+            const response = await AppDataSource
+            .getRepository(paslon)
+            .createQueryBuilder("paslon")
+            .getMany();
+    
+          console.log(response)
+    
             return {
                 message: "success get all paslon",
                 data: response
@@ -73,15 +95,11 @@ export default new class PaslonServices {
 
     async getOne (id: number): Promise<object | string> {
         try {
-            const response = await this.PaslonRepository.find({
-                where: { id },
-                relations: ["partai"],
-                select: {
-                    partai: {
-                        name: true
-                    }
-                }
-            })
+            const response = await AppDataSource
+            .getRepository(paslon)
+            .createQueryBuilder("paslon")
+            .leftJoinAndSelect("paslon.partai", "partai")
+            .getOne();
 
             return {
                 message: "success get one paslon",

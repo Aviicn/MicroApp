@@ -8,10 +8,11 @@ async create(req: Request, res: Response) {
   try {
     const data = req.body;
     const loginSession = res.locals.loginSession.id;
-    console.log("message: voter already voted"+ JSON.stringify(data));
-
+console.log("dataaaa",data)
     const { error, value } = createVoteValidation.validate(data);
     if (error) {
+      console.error("Error validate a Vote:", error);
+
       return res.status(400).json(error);
     }
     

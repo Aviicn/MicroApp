@@ -4,6 +4,9 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 export default new (class AuthService {
+  findById(user: any) {
+    throw new Error("Method not implemented.");
+  }
   getOne: any;
   async register(reqBody: any): Promise<object | string> {
     try {

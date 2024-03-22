@@ -5,13 +5,14 @@ export default new (class VoteService {
   async create(data: any): Promise<object | string> {
     try {
       const checkVoter = await AppDataSource
-      .getRepository(vote)
+        .getRepository(vote)
         .createQueryBuilder("vote")
         .leftJoin("vote.user", "user")
         .where("user.id = :userId", { userId: data.user })
         .getOne();
 
       if (checkVoter) {
+        console.log("bisaaa" ,checkVoter)
         return "message: voter already voted";
       }
 
@@ -41,7 +42,6 @@ export default new (class VoteService {
         .leftJoinAndSelect("vote.user", "user")
         .leftJoinAndSelect("vote.paslon", "paslon")
         .select([])
-        //.select(["paslon.name", "user.fullName", "user.address", "user.gender"])
         .getMany();
 
       const countVoters = await AppDataSource.getRepository(vote)

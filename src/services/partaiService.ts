@@ -52,7 +52,7 @@ export default new (class PartaiServices {
 
       return {
         message: "Partai deleted successfully",
-        data: partai,
+        data: response,
       };
     } catch (error) {
       console.error("Error deleting partai:", error);

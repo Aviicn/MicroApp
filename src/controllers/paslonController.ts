@@ -10,6 +10,7 @@ export default new (class paslonController {
                 name : req.body.name,
                 no : req.body.no,
                 visionAndMission : req.body.visionAndMission,
+                coalition : req.body.coalition,
                 picture: null //res.locals.filename
             }
 
@@ -44,9 +45,20 @@ export default new (class paslonController {
                 name: req.body.name,
                 no: req.body.no,
                 visionAndMission: req.body.visionAndMission,
+                coalition : req.body.coalition,
                 picture: res.locals.filename,
             };
-            const response = await paslonService.update(id, data);
+
+            const { error, value } = createPaslonSchema.validate(data);
+            if(error) return res.status(400).json(error.details[0].message)
+         
+            
+            const obj = {
+                ...value
+             
+            }
+            
+            const response = await paslonService.update(id, obj)
             return res.status(201).json(response);
         } catch (error) {
             return res.status(500).json(error);
